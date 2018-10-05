@@ -1,0 +1,11 @@
+@tailwind preflight;
+@tailwind components;
+@tailwind utilities;
+
+.ease-in {
+  transition: all 0.1s ease-in-out;
+}
+
+.scaleOneHalf {
+  scale: 0.5;
+}
