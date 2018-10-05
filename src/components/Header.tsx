@@ -27,12 +27,6 @@ const GetStarted: React.SFC<IGetStartedProps> = props => {
   );
 };
 
-interface IMiniChartProps {
-  cost: string;
-  dailyChange: number;
-  coinName: string;
-}
-
 const pickSvg = (coinName: string) => {
   switch (coinName) {
     case 'Bitcoin':
@@ -130,26 +124,78 @@ const renderDailyChange = (dailyChange: number) => {
   );
 };
 
-const MiniChart: React.SFC<IMiniChartProps> = props => {
-  return (
-    <div className="p-4 border rounded mr-8 bg-white w-48">
-      <div className="flex items-center mb-2">
-        {pickSvg(props.coinName)}
-        <p className="font-semibold text-grey-darkest">{props.coinName}</p>
+interface IMiniChartProps {
+  cost: string;
+  dailyChange: number;
+  coinName: string;
+}
+
+interface IMiniChartState {
+  isHidden: boolean;
+}
+
+class MiniChart extends React.Component<IMiniChartProps, IMiniChartState> {
+  constructor(props: IMiniChartProps) {
+    super(props);
+    this.state = {
+      isHidden: true
+    };
+  }
+
+  componentDidMount() {}
+
+  mouseEnter = () => {
+    this.setState({ isHidden: false });
+  };
+  mouseLeave = () => {
+    this.setState({ isHidden: true });
+  };
+
+  renderButton = (coinName: string) => {
+    if (this.state.isHidden) return null;
+    return (
+      <>
+        <div className="opacity-75 absolute rounded h-full w-full pin bg-white" />
+        <div className="flex justify-center relative">
+          <button
+            style={{ bottom: 60 }}
+            className="z-25 absolute appearance-none text-white bg-green hover:bg-green-dark rounded py-3 px-6 opacity-100 text-sm"
+          >
+            Buy {coinName}
+          </button>
+        </div>
+      </>
+    );
+  };
+
+  render() {
+    return (
+      <div
+        className="relative p-4 border rounded mr-8 bg-white w-64"
+        onMouseEnter={this.mouseEnter}
+        onMouseLeave={this.mouseLeave}
+      >
+        <div className="flex items-center mb-2">
+          {pickSvg(this.props.coinName)}
+          <p className="font-semibold text-grey-darkest">
+            {this.props.coinName}
+          </p>
+        </div>
+        <div className="flex items-center mr-2">
+          <h3 className="mr-2 text-2xl font-normal">{this.props.cost}</h3>
+          {renderDailyChange(this.props.dailyChange)}
+        </div>
+        <div className="h-24 w-24 flex items-center">Some Graph</div>
+        <div className=" flex justify-end">
+          <p className="text-xs text-white p-1 bg-grey-dark rounded w-1/5 text-center">
+            24h
+          </p>
+        </div>
+        {this.renderButton(this.props.coinName)}
       </div>
-      <div className="flex items-center mr-2">
-        <h3 className="mr-2 text-2xl font-normal">{props.cost}</h3>
-        {renderDailyChange(props.dailyChange)}
-      </div>
-      <div className="h-24 w-24 flex items-center">Some Graph</div>
-      <div className=" flex justify-end">
-        <p className="text-xs text-white p-1 bg-grey-dark rounded w-1/5 text-center">
-          24h
-        </p>
-      </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 interface IMiniChartsProps {}
 
