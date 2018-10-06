@@ -278,7 +278,16 @@ class Header extends React.Component<IHeaderProps, any> {
   public render() {
     return (
       <div>
-        <div className="bg-blue-coinbase">
+        <div
+          style={{
+            backgroundImage:
+              'url(https://www2.coinbase.com/assets/topBackground.png)',
+            backgroundSize: 740,
+            backgroundPosition: 'right top',
+            backgroundRepeat: 'no-repeat'
+          }}
+          className="bg-blue-coinbase"
+        >
           <div className="flex justify-center">
             <div className="container">
               <div className="p-8 flex justify-between items-center">
