@@ -6,10 +6,6 @@
   transition: all 0.1s ease-in-out;
 }
 
-.scaleOneHalf {
-  scale: 0.5;
-}
-
 .info-badge-shadow {
   box-shadow: rgba(218, 225, 233, 0.56) 0px 8px 16px 0px;
 }
